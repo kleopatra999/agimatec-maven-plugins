@@ -3,12 +3,6 @@
   -->
 
 <project>
-    <parent>
-    <groupId>agimatec</groupId>
-    <artifactId>agimatec</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <relativePath>../../../../pom.xml</relativePath>
-  </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>agimatec.maven.plugins</groupId>
   <artifactId>maven-wait-plugin</artifactId>
