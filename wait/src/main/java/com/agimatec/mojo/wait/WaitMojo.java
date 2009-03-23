@@ -28,8 +28,14 @@ public class WaitMojo extends AbstractMojo {
     int timeout;
     /** @parameter default-value="0" */
     int maxcount;
+    /** @parameter default-value="false" */
+    boolean skip;
 
     public void execute() throws MojoExecutionException, MojoFailureException {
+        if(skip) {
+            getLog().info("skipped waiting for " + protocol + "://" + host);
+            return;
+        }
         URL url = getURL();
         int count = maxcount;
         int trials = 1;
@@ -52,7 +58,7 @@ public class WaitMojo extends AbstractMojo {
                 }
                 try {
                     Thread.sleep(timeout);
-                } catch (InterruptedException e1) {
+                } catch (InterruptedException e1) { // do nothing
                 }
                 trials++;
             }
