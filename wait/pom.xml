@@ -9,6 +9,25 @@
   <packaging>maven-plugin</packaging>
   <version>1.0</version>
   <name>Wait on a URL, used to wait until a server has booted</name>
+
+
+  <distributionManagement>
+    <site>
+      <id>${agimatec-site-id}</id>
+      <url>${agimatec-site-url}/agimatec-tools/site</url>
+    </site>
+    <snapshotRepository>
+      <id>deployment.dav</id>
+      <name>Agimatec Snapshot Artifacts</name>
+      <url>${deployment-dav-url}</url>
+    </snapshotRepository>
+    <repository>
+      <id>internal.dav</id>
+      <name>Agimatec Artifacts</name>
+      <url>${internal-dav-url}</url>
+    </repository>
+  </distributionManagement>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.maven</groupId>
