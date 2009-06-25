@@ -45,10 +45,21 @@ public class CodeGeneratorMojo
      */
     private List<String> entries;
 
+    /**
+     * @parameter default-value="true"
+     */
+    private boolean addToBuildPath;
+
+    /**
+     * @parameter expression="${project}"
+     */
+    private org.apache.maven.project.MavenProject mavenProject;
+
+
     public void execute()
             throws MojoExecutionException {
-        Map<String,List> model = new HashMap<String,List>();
-        model.put("entries",entries);
+        Map<String, List> model = new HashMap<String, List>();
+        model.put("entries", entries);
         Configuration freemarkerConfiguration = new Configuration();
         try {
             freemarkerConfiguration.setDirectoryForTemplateLoading(template.getParentFile());
@@ -81,9 +92,17 @@ public class CodeGeneratorMojo
             templateEngine.process(model, out);
         } catch (TemplateException e) {
 
-            throw new MojoExecutionException("Error when processing the template: \n"+e.getFTLInstructionStack(), e);
+            throw new MojoExecutionException("Error when processing the template: \n" + e.getFTLInstructionStack(), e);
         } catch (IOException e) {
             throw new MojoExecutionException("Could not write into target file:" + targetFile.getAbsolutePath(), e);
         }
+        
+        if (addToBuildPath) {
+            getLog().info("Adding generated source to compile path: " + targetFile.getParentFile().getAbsolutePath());
+            mavenProject.addCompileSourceRoot(targetFile.getParentFile().getAbsolutePath());
+        }else{
+            getLog().info("Skipped adding generated sources to build path.");            
+        }
+
     }
 }
